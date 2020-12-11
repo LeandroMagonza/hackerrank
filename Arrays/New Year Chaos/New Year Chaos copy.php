@@ -3,50 +3,31 @@
 // changer exerciseTemplate for required function name, and its arguments accordingly
 function minimumBribes($q) {
 
-    $bribes = 0;
-    $calculatedQueueVal = 0;
-    $currentQueueVal = 0;
-    foreach ($q as $key => $link) {
-        $key++;
-        $calculatedQueueVal += $key; 
-        $currentQueueVal += $link;
-        $currentBribe = 0;
-        if ($key+2<$link) {
-            $tooChaotic = true;
-        }
-        
-            
-        
-            // if (isset($q[$key]) and $q[$key] < $link) {
-            //     $currentBribe++;
-            // }
-            // if (isset($q[$key+1]) and $q[$key+1] < $link) {
-            //     $currentBribe++;
-            // }
-            // $bribes += max($link-$key,$currentBribe);
-            // $bribes += $link-$key; 
-        
-        // else
-        // if ($link>$key ) {
-        //     echo  $bribes += min($currentQueueVal-$calculatedQueueVal,$link-$key);  
-        //     echo " - ".$currentQueueVal." - ".$calculatedQueueVal;
-        //     echo "<br>";
-        // }
-        // else {
-        //     echo  $bribes += $currentQueueVal-$calculatedQueueVal;
-        //     echo " - ".$currentQueueVal." - ".$calculatedQueueVal;
-        //     echo "<br>";
-        // }
-        $bribes += $link-$key;
+    $totalBribes = 0;
 
-        
+    $expectedFirst = 1;
+    $expectedSecond = 2;
+    $expectedThird = 3;
+    
+    foreach ($q as $key => $value) {
+        if ($value == $expectedFirst) {
+            $expectedFirst = $expectedSecond;
+            $expectedSecond = $expectedThird;
+            ++$expectedThird;
+        } else if ($value == $expectedSecond) {
+            ++$totalBribes;
+            $expectedSecond = $expectedThird;
+            ++$expectedThird;
+        } else if ($value == $expectedThird) {
+            $totalBribes += 2;
+            ++$expectedThird;
+        } else {
+            return "Too chaotic";
+        }
     }
-    if (isset($tooChaotic)) {
-        return "Too Chaotic\n";
-    }
-    else {
-        return $bribes."\n";
-    }
+    
+    return $totalBribes;
+    
 }
 
 function processInput($fileInputs){
